@@ -1,7 +1,7 @@
 /**
  * @author David Morin
- * This class defines a data structure to assists
- * with implementing the k-capacitated facility locator
+ * This class defines a data structure to assist
+ * with implementing the k-capacitated facility location problem
  */
 
 package cmsc420_f22; // Do not delete this line
