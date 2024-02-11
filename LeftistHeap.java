@@ -1,3 +1,13 @@
+/**
+ * @author David Morin
+ * 
+ * This is an implementation of a LeftistHeap data structure. This is a
+ * priority queue that supports inserting, extracting minimum value,
+ * and the merging of two heaps.
+
+*/
+ 
+ 
 package cmsc420_f22; // Do not delete this line
 
 import java.util.ArrayList;
@@ -14,6 +24,7 @@ public class LeftistHeap<Key extends Comparable<Key>, Value> {
 		/*
 		 * Constructor with known key and value
 		 */
+		 
 		public LHNode(Key key, Value value) {
 			this.key = key;
 			this.value = value;
@@ -26,6 +37,7 @@ public class LeftistHeap<Key extends Comparable<Key>, Value> {
 		/*
 		 * Copy Constructor
 		 */
+		 
 		public LHNode(LHNode copyNode) {
 			this.key = copyNode.key;
 			this.value = copyNode.value;
@@ -92,9 +104,6 @@ public class LeftistHeap<Key extends Comparable<Key>, Value> {
 		}
 	}
 	
-	
-	public LeftistHeap<Key, Value> split(Key x) {return null;}
-	
 	/**
 	 * This returns the smallest key in the heap, but makes no changes to the
 	 * heap’s contents or structure. If the heap is empty, it returns null.
@@ -146,28 +155,38 @@ public class LeftistHeap<Key extends Comparable<Key>, Value> {
 	
 	/**
 	 * Helper method for mergeWith that takes two nodes and merges their contents
-	 */ 
+	 */
 	private LHNode merge(LHNode u, LHNode v) { 
-		if (u == null)
-			return v; // if one is empty, return the other
-		if (v == null)
+		if (u == null) {
+			return v;
+		}
+		
+		if (v == null) {
 			return u;
-		if (u.key.compareTo(v.key) > 0) { // swap so that u is smaller
-			LHNode t = u;
+		}
+		
+		if (u.key.compareTo(v.key) > 0) {
+			LHNode temp = u;
+			
 			u = v;
-			v = t;
+			v = temp;	
 		}
-		if (u.left == null) { // u has nothing to its left
-			u.left = v; // put v here then
-		} else { // merge v on right and swap if needed
-			u.right = merge(u.right, v); // recursively merge u's right subtree
-			if (u.left.npl < u.right.npl) { // fail the leftist property?
-				LHNode t = u.left; // swap children
+		
+		if (u.left == null) {
+			u.left = v;
+		} else { 
+			u.right = merge(u.right, v);
+					
+			if (u.left.npl < u.right.npl) { 
+				LHNode temp = u.left;
+				
 				u.left = u.right;
-				u.right = t;
+				u.right = temp;		
 			}
-			u.npl = u.right.npl + 1; // update npl value
+			
+			u.npl = u.right.npl + 1;
 		}
-		return u; // return the root of final tree
+		
+		return u; 
 	}
 }
